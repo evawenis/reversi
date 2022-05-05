@@ -151,9 +151,6 @@ def main():
             continue
         history.append((copy.deepcopy(board), offset))
         put(board, p, position[pos])
-        print('history')
-        for i in history:
-            print_board(i[0])
         turn += 1
 
     print_board(board)
