@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import copy
 
 hori = 8
 vert = 8
@@ -116,6 +117,7 @@ def main():
 
     turn = 1
     offset = 0
+    history = []
 
     while turn <= hori * vert - 4:
         p = 'o' if (turn + offset) % 2 else 'x'
@@ -140,8 +142,18 @@ def main():
                 print("Error: please input valid numbers")
                 continue
         except:
+            if pos == 'b' and len(history) != 0:
+                turn -= 1
+                board = history[-1][0]
+                offset = history[-1][1]
+                history.pop(-1)
+                print("Note: reverted")
             continue
+        history.append((copy.deepcopy(board), offset))
         put(board, p, position[pos])
+        print('history')
+        for i in history:
+            print_board(i[0])
         turn += 1
 
     print_board(board)
